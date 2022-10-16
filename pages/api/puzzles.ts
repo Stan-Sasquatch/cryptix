@@ -7,12 +7,10 @@ export default function puzzlesHandler(req: NextApiRequest, res: NextApiResponse
 	switch (method) {
 		case "GET":
 			// Get data from your database
-			PuzzlesController.getAllPuzzles(req, res);
-			break;
+			return PuzzlesController.getAllPuzzles(req, res);
 		case "POST":
 			// Update or create data in your database
-			PuzzlesController.createPuzzle(req, res);
-			break;
+			return PuzzlesController.createPuzzle(req, res);
 		default:
 			res.setHeader("Allow", ["GET", "POST"]);
 			res.status(405).end(`Method ${method} Not Allowed`);

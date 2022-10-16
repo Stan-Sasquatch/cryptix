@@ -6,14 +6,11 @@ export default function puzzlesHandler(req: NextApiRequest, res: NextApiResponse
 
 	switch (method) {
 		case "GET":
-			PuzzlesController.getPuzzle(req, res);
-			break;
+			return PuzzlesController.getPuzzle(req, res);
 		case "PUT":
-			PuzzlesController.updatePuzzle(req, res);
-			break;
+			return PuzzlesController.updatePuzzle(req, res);
 		case "DELETE":
-			PuzzlesController.deletePuzzle(req, res);
-			break;
+			return PuzzlesController.deletePuzzle(req, res);
 		default:
 			res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
 			res.status(405).end(`Method ${method} Not Allowed`);

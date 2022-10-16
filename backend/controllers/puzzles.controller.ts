@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { NextApiRequest, NextApiResponse } from "next";
 import PuzzlesDAO from "../DAO/PuzzlesDAO";
+import { puzzleBaseModel, puzzleEditModel } from "../../models/puzzles";
 import { isError } from "../utils/helpers";
 
 const tryCatchWrapper = (executable: () => Promise<void>) => async (res: NextApiResponse) => {
@@ -45,8 +46,9 @@ export default class PuzzlesController {
 
 	static async createPuzzle(req: NextApiRequest, res: NextApiResponse) {
 		const handleCreate = async () => {
-			const { answer, clues } = req.body;
-			await PuzzlesDAO.createPuzzle(answer, clues);
+			const model: puzzleBaseModel = req.body;
+
+			await PuzzlesDAO.createPuzzle(model);
 		};
 
 		tryCatchWrapper(handleCreate)(res);
@@ -54,9 +56,8 @@ export default class PuzzlesController {
 
 	static async updatePuzzle(req: NextApiRequest, res: NextApiResponse) {
 		const handleUpdate = async () => {
-			const model = req.body;
+			const model: puzzleEditModel = req.body;
 			const puzzleResponse = await PuzzlesDAO.updatePuzzle(model);
-			console.log(JSON.stringify(model));
 			if (isError(puzzleResponse)) {
 				const { error } = puzzleResponse;
 				res.status(400).json({ error });
