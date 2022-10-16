@@ -11,7 +11,7 @@ export default function puzzlesHandler(req: NextApiRequest, res: NextApiResponse
 			break;
 		case "POST":
 			// Update or create data in your database
-			res.status(200).json({ response: "success" });
+			PuzzlesController.createPuzzle(req, res);
 			break;
 		default:
 			res.setHeader("Allow", ["GET", "POST"]);

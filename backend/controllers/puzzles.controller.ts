@@ -15,7 +15,7 @@ const tryCatchWrapper = (executable: () => Promise<void>) => async (res: NextApi
 export default class PuzzlesController {
 	static async getPuzzle(req: NextApiRequest, res: NextApiResponse) {
 		try {
-			const response = await PuzzlesDAO.getPuzzleById(req.params.id);
+			const response = await PuzzlesDAO.getPuzzleById(req.query.id as string);
 
 			if (isError(response)) {
 				const { error } = response;
@@ -56,7 +56,7 @@ export default class PuzzlesController {
 		const handleUpdate = async () => {
 			const model = req.body;
 			const puzzleResponse = await PuzzlesDAO.updatePuzzle(model);
-
+			console.log(JSON.stringify(model));
 			if (isError(puzzleResponse)) {
 				const { error } = puzzleResponse;
 				res.status(400).json({ error });
@@ -70,7 +70,7 @@ export default class PuzzlesController {
 
 	static async deletePuzzle(req: NextApiRequest, res: NextApiResponse) {
 		const handleDelete = async () => {
-			const puzzleId = req.params.id;
+			const puzzleId = req.query.id as string;
 			await PuzzlesDAO.deletePuzzle(puzzleId);
 		};
 
