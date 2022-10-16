@@ -1,38 +1,30 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { usePuzzle } from "../queries";
+import { Puzzle } from "../../models/puzzles";
 
 type PuzzlesProps = {
-	id: string;
+	puzzle: Puzzle | null;
 };
 
 const Puzzles: NextPage<PuzzlesProps> = (props) => {
-	const { data, isLoading } = usePuzzle(props.id);
+	const { puzzle } = props;
 
-	if (isLoading) {
+	const detailBody = (puzzle: Puzzle) => {
+		const clues = puzzle && puzzle.clues.map((x) => <li key={x.word}>{x.word}</li>);
+
 		return (
-			<>
-				<Head>
-					<title>Puzzles</title>
-				</Head>
-
-				<main>
-					<h1>...Loading</h1>
-				</main>
-			</>
+			<main>
+				<h1>{puzzle.answer}</h1>
+				{clues}
+			</main>
 		);
-	}
-	const clues = data && data.clues.map((x) => <li key={x.word}>{x.word}</li>);
+	};
 	return (
 		<>
 			<Head>
-				<title>Puzzles</title>
+				<title>Detail</title>
 			</Head>
-
-			<main>
-				<h1>{data?.answer}</h1>
-				{clues}
-			</main>
+			{puzzle && detailBody(puzzle)}
 		</>
 	);
 };

@@ -1,18 +1,18 @@
-type clue = {
+type Clue = {
 	word: string;
 	positionInClueWord: number;
 	text: string;
 };
 
-export type puzzle = puzzleEditModel & {
+export type Puzzle = PuzzleEditModel & {
 	date: Date;
 };
 
-export type puzzleBaseModel = {
+export type PuzzleBaseModel = {
 	answer: string;
-	clues: clue[];
+	clues: Clue[];
 };
 
-export type puzzleEditModel = puzzleBaseModel & {
+export type PuzzleEditModel = PuzzleBaseModel & {
 	id: string;
 };

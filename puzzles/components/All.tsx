@@ -1,25 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useAllPuzzles } from "../queries";
+import { Puzzle } from "../../models/puzzles";
 
-const Puzzles: NextPage = () => {
-	const { data, isLoading } = useAllPuzzles();
+type PuzzlesProps = {
+	puzzles: Puzzle[];
+};
 
-	if (isLoading) {
-		return (
-			<>
-				<Head>
-					<title>Puzzles</title>
-				</Head>
-
-				<main>
-					<h1>...Loading</h1>
-				</main>
-			</>
-		);
-	}
-
-	const puzzles = data && data.map((x) => <li key={x.id}>{x.answer}</li>);
+const Puzzles: NextPage<PuzzlesProps> = (props) => {
+	const { puzzles } = props;
 
 	return (
 		<>
@@ -29,7 +17,9 @@ const Puzzles: NextPage = () => {
 
 			<main>
 				<h1>Puzzles</h1>
-				{puzzles}
+				{puzzles.map((p) => (
+					<li key={p.answer}>{p.answer}</li>
+				))}
 			</main>
 		</>
 	);

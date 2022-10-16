@@ -1,17 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { puzzle } from "../models/puzzles";
+import { Puzzle } from "../models/puzzles";
 
-const puzzlesApi = "/api/puzzles";
-async function getAllPuzzles() {
+const baseUri = process.env.DEV_URL;
+const puzzlesApi = `${baseUri}/api/puzzles`;
+
+export async function getAllPuzzles() {
 	const result = await axios.get(puzzlesApi);
-	return result.data as puzzle[];
+	return result.data as Puzzle[];
 }
 
-async function getPuzzle(id: string) {
-	const result = await axios.get(`${puzzlesApi}/${id}`);
-	return result.data as puzzle;
+export async function getPuzzle(id: string) {
+	const test = await axios.get(`${puzzlesApi}/${id}`);
+	return test.data as unknown as Puzzle;
 }
-
-export const useAllPuzzles = () => useQuery(["GetPuzzles"], getAllPuzzles);
-export const usePuzzle = (puzzleId: string) => useQuery(["GetPuzzle", puzzleId], () => getPuzzle(puzzleId));

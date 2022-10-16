@@ -1,16 +1,15 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import All from "../../puzzles/components/All";
+import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from "next";
+import { Puzzle } from "../../models/puzzles";
 import Detail from "../../puzzles/components/Detail";
+import { getPuzzle } from "../../puzzles/queries";
 
-const PuzzlesDetailPage: NextPage = () => {
-	const router = useRouter();
-	const { id } = router.query;
-	if (!id) {
-		return <All />;
-	}
-	const puzzleId = Array.isArray(id) ? id[0] : id;
-	return <Detail id={puzzleId} />;
+export const getServerSideProps: GetServerSideProps<{ puzzle: Puzzle | null }> = async (context) => {
+	const puzzle = await getPuzzle(context.params?.id as string);
+	return { props: { puzzle } };
+};
+
+const PuzzlesDetailPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (props) => {
+	return <Detail {...props} />;
 };
 
 export default PuzzlesDetailPage;

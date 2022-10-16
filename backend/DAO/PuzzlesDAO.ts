@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { puzzleBaseModel, puzzleEditModel } from "../../models/puzzles";
+import { PuzzleBaseModel, PuzzleEditModel } from "../../models/puzzles";
 import clientPromise from "../mongodbClientPromise";
 
 export default class PuzzlesDAO {
@@ -29,7 +29,7 @@ export default class PuzzlesDAO {
 		}
 	}
 
-	static async createPuzzle(model: puzzleBaseModel) {
+	static async createPuzzle(model: PuzzleBaseModel) {
 		const puzzles = await PuzzlesDAO.getCollectionConnection();
 
 		try {
@@ -46,7 +46,7 @@ export default class PuzzlesDAO {
 		}
 	}
 
-	static async updatePuzzle(model: puzzleEditModel) {
+	static async updatePuzzle(model: PuzzleEditModel) {
 		const puzzles = await PuzzlesDAO.getCollectionConnection();
 
 		try {
