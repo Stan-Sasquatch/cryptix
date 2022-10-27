@@ -1,28 +1,23 @@
-import type { NextPage } from "next";
-import Head from "next/head";
+import { NextPage } from "next";
+import HomeNavWrapper from "../../common/nav/HomeNavWrapper";
 import { Puzzle } from "../../models/puzzles";
 
-type PuzzlesProps = {
+type AllProps = {
 	puzzles: Puzzle[];
 };
 
-const Puzzles: NextPage<PuzzlesProps> = (props) => {
+const All: NextPage<AllProps> = (props) => {
 	const { puzzles } = props;
 
 	return (
-		<>
-			<Head>
-				<title>Puzzles</title>
-			</Head>
-
-			<main>
-				<h1>Puzzles</h1>
+		<HomeNavWrapper title={"All Puzzles"}>
+			<>
 				{puzzles.map((p) => (
 					<li key={p.answer}>{p.answer}</li>
 				))}
-			</main>
-		</>
+			</>
+		</HomeNavWrapper>
 	);
 };
 
-export default Puzzles;
+export default All;

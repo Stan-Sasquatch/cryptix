@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
-import Head from "next/head";
+import HomeNavWrapper from "../../common/nav/HomeNavWrapper";
 import { Puzzle } from "../../models/puzzles";
 
-type PuzzlesProps = {
+type detailProps = {
 	puzzle: Puzzle | null;
 };
 
-const Puzzles: NextPage<PuzzlesProps> = (props) => {
+const Detail: NextPage<detailProps> = (props) => {
 	const { puzzle } = props;
 
 	const detailBody = (puzzle: Puzzle) => {
@@ -19,14 +19,12 @@ const Puzzles: NextPage<PuzzlesProps> = (props) => {
 			</main>
 		);
 	};
+
 	return (
-		<>
-			<Head>
-				<title>Detail</title>
-			</Head>
-			{puzzle && detailBody(puzzle)}
-		</>
+		<HomeNavWrapper title={"Puzzle Detail"}>
+			<>{puzzle && detailBody(puzzle)}</>
+		</HomeNavWrapper>
 	);
 };
 
-export default Puzzles;
+export default Detail;
