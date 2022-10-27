@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import HomeNavWrapper from "../../common/nav/HomeNavWrapper";
+import { HomeNavMenuItems } from "../../common/nav/models";
 import { Puzzle } from "../../models/puzzles";
 
 type detailProps = {
@@ -21,7 +22,7 @@ const Detail: NextPage<detailProps> = (props) => {
 	};
 
 	return (
-		<HomeNavWrapper title={"Puzzle Detail"}>
+		<HomeNavWrapper title={"Puzzle Detail"} activeItem={HomeNavMenuItems.None}>
 			<>{puzzle && detailBody(puzzle)}</>
 		</HomeNavWrapper>
 	);

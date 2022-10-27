@@ -14,5 +14,5 @@ export type PuzzleBaseModel = {
 };
 
 export type PuzzleEditModel = PuzzleBaseModel & {
-	id: string;
+	_id: string;
 };
