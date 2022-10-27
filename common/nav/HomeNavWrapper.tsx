@@ -11,11 +11,9 @@ type HomeNavWrapperProps = {
 
 const HomeNavWrapper: NextPage<HomeNavWrapperProps> = ({ title, children, activeItem }) => {
 	return (
-		<>
-			<NavWrapper title={title} navbar={<HomeNav activeItem={activeItem} />}>
-				{children}
-			</NavWrapper>
-		</>
+		<NavWrapper title={title} navbar={<HomeNav activeItem={activeItem} />}>
+			{children}
+		</NavWrapper>
 	);
 };
 

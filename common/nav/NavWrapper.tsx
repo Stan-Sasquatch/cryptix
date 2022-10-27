@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Grid } from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
+import styles from "styles/NavWrapper.module.css";
 
 type NavWrapperProps = {
 	title: string;
@@ -10,21 +11,23 @@ type NavWrapperProps = {
 
 const NavWrapper: NextPage<NavWrapperProps> = ({ title, children, navbar }) => {
 	return (
-		<div>
+		<>
 			<Head>
 				<title>{`puzzle app ${title}`}</title>
 			</Head>
 
-			<Grid textAlign="center">
-				<Grid.Row>
-					<h1>{title}</h1>
-				</Grid.Row>
-				<Grid.Row>
-					<Grid.Column width={3}>{navbar}</Grid.Column>
-					<Grid.Column width={13}>{children}</Grid.Column>
-				</Grid.Row>
+			<Grid className={styles.wrapper}>
+				<Grid.Column width={3}>
+					<Container className={styles.verticalNav}>{navbar}</Container>
+				</Grid.Column>
+				<Grid.Column width={13}>
+					<Grid.Row>
+						<h1>{title}</h1>
+					</Grid.Row>
+					<Grid.Row textAlign="center">{children}</Grid.Row>
+				</Grid.Column>
 			</Grid>
-		</div>
+		</>
 	);
 };
 

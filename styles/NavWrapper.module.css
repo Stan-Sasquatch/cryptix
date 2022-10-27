@@ -1,0 +1,12 @@
+.verticalNav {
+	height: 100%;
+	background-color: rgba(164, 246, 244, 0.855);
+	margin-top: 36px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.wrapper {
+	height: 100%;
+}
