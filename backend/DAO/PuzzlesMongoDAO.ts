@@ -2,14 +2,14 @@ import { ObjectId } from "mongodb";
 import { PuzzleBaseModel, PuzzleEditModel } from "../../models/puzzles";
 import clientPromise from "../mongodbClientPromise";
 
-export default class PuzzlesDAO {
+export default class PuzzlesMongoDAO {
 	static async getCollectionConnection() {
 		const client = await clientPromise;
 		return client.db().collection("puzzles");
 	}
 
 	static async getPuzzleById(id: string) {
-		const puzzles = await PuzzlesDAO.getCollectionConnection();
+		const puzzles = await PuzzlesMongoDAO.getCollectionConnection();
 
 		try {
 			return await puzzles.findOne({ _id: new ObjectId(id) });
@@ -20,7 +20,7 @@ export default class PuzzlesDAO {
 	}
 
 	static async getAllPuzzles() {
-		const puzzles = await PuzzlesDAO.getCollectionConnection();
+		const puzzles = await PuzzlesMongoDAO.getCollectionConnection();
 		try {
 			return puzzles.find({}).toArray();
 		} catch (e) {
@@ -30,7 +30,7 @@ export default class PuzzlesDAO {
 	}
 
 	static async createPuzzle(model: PuzzleBaseModel) {
-		const puzzles = await PuzzlesDAO.getCollectionConnection();
+		const puzzles = await PuzzlesMongoDAO.getCollectionConnection();
 
 		try {
 			const date = new Date();
@@ -47,7 +47,7 @@ export default class PuzzlesDAO {
 	}
 
 	static async updatePuzzle(model: PuzzleEditModel) {
-		const puzzles = await PuzzlesDAO.getCollectionConnection();
+		const puzzles = await PuzzlesMongoDAO.getCollectionConnection();
 
 		try {
 			const date = new Date();
@@ -64,7 +64,7 @@ export default class PuzzlesDAO {
 	}
 
 	static async deletePuzzle(puzzleId: any) {
-		const puzzles = await PuzzlesDAO.getCollectionConnection();
+		const puzzles = await PuzzlesMongoDAO.getCollectionConnection();
 		try {
 			const deleteResponse = await puzzles.deleteOne({
 				_id: new ObjectId(puzzleId),

@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { NextApiRequest, NextApiResponse } from "next";
-import PuzzlesDAO from "../DAO/PuzzlesDAO";
+import PuzzlesMongoDAO from "../DAO/PuzzlesMongoDAO";
 import { PuzzleBaseModel, PuzzleEditModel } from "../../models/puzzles";
 import { isError } from "../utils/helpers";
+import PuzzlesPostgresDAO from "../DAO/PuzzlesPostgresDAO";
 
 const tryCatchWrapper = (executable: () => Promise<void>) => async (res: NextApiResponse) => {
 	try {
@@ -16,7 +17,7 @@ const tryCatchWrapper = (executable: () => Promise<void>) => async (res: NextApi
 export default class PuzzlesController {
 	static async getPuzzle(req: NextApiRequest, res: NextApiResponse) {
 		try {
-			const response = await PuzzlesDAO.getPuzzleById(req.query.id as string);
+			const response = await PuzzlesMongoDAO.getPuzzleById(req.query.id as string);
 
 			if (isError(response)) {
 				const { error } = response;
@@ -31,7 +32,7 @@ export default class PuzzlesController {
 
 	static async getAllPuzzles(req: NextApiRequest, res: NextApiResponse) {
 		try {
-			const response = await PuzzlesDAO.getAllPuzzles();
+			const response = await PuzzlesMongoDAO.getAllPuzzles();
 
 			if (isError(response)) {
 				const { error } = response;
@@ -48,7 +49,7 @@ export default class PuzzlesController {
 		const handleCreate = async () => {
 			const model: PuzzleBaseModel = req.body;
 
-			await PuzzlesDAO.createPuzzle(model);
+			await PuzzlesPostgresDAO.createPuzzle(model);
 		};
 
 		tryCatchWrapper(handleCreate)(res);
@@ -57,7 +58,7 @@ export default class PuzzlesController {
 	static async updatePuzzle(req: NextApiRequest, res: NextApiResponse) {
 		const handleUpdate = async () => {
 			const model: PuzzleEditModel = req.body;
-			const puzzleResponse = await PuzzlesDAO.updatePuzzle(model);
+			const puzzleResponse = await PuzzlesMongoDAO.updatePuzzle(model);
 			if (isError(puzzleResponse)) {
 				const { error } = puzzleResponse;
 				res.status(400).json({ error });
@@ -72,7 +73,7 @@ export default class PuzzlesController {
 	static async deletePuzzle(req: NextApiRequest, res: NextApiResponse) {
 		const handleDelete = async () => {
 			const puzzleId = req.query.id as string;
-			await PuzzlesDAO.deletePuzzle(puzzleId);
+			await PuzzlesMongoDAO.deletePuzzle(puzzleId);
 		};
 
 		tryCatchWrapper(handleDelete)(res);
