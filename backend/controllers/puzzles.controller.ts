@@ -17,7 +17,7 @@ const tryCatchWrapper = (executable: () => Promise<void>) => async (res: NextApi
 export default class PuzzlesController {
 	static async getPuzzle(req: NextApiRequest, res: NextApiResponse) {
 		try {
-			const response = await PuzzlesMongoDAO.getPuzzleById(req.query.id as string);
+			const response = await PuzzlesPostgresDAO.getPuzzleById(req.query.id as string);
 
 			if (isError(response)) {
 				const { error } = response;
@@ -32,7 +32,7 @@ export default class PuzzlesController {
 
 	static async getAllPuzzles(req: NextApiRequest, res: NextApiResponse) {
 		try {
-			const response = await PuzzlesMongoDAO.getAllPuzzles();
+			const response = await PuzzlesPostgresDAO.getAllPuzzles();
 
 			if (isError(response)) {
 				const { error } = response;
@@ -58,12 +58,10 @@ export default class PuzzlesController {
 	static async updatePuzzle(req: NextApiRequest, res: NextApiResponse) {
 		const handleUpdate = async () => {
 			const model: PuzzleEditModel = req.body;
-			const puzzleResponse = await PuzzlesMongoDAO.updatePuzzle(model);
+			const puzzleResponse = await PuzzlesPostgresDAO.updatePuzzle(model);
 			if (isError(puzzleResponse)) {
 				const { error } = puzzleResponse;
 				res.status(400).json({ error });
-			} else if (puzzleResponse.modifiedCount === 0) {
-				throw new Error("unable to update puzzle");
 			}
 		};
 

@@ -8,14 +8,14 @@ generator client {
 }
 
 model Puzzle {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   createdAt DateTime @default(now())
   answer    String
   clues     Clue[]
 }
 
 model Clue {
-  id                 String   @id @default(uuid())
+  id                 String   @id @unique @default(uuid())
   createdAt          DateTime @default(now())
   word               String
   positionInClueWord Int

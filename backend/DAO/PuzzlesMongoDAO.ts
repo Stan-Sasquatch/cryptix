@@ -52,7 +52,7 @@ export default class PuzzlesMongoDAO {
 		try {
 			const date = new Date();
 			const updateResponse = await puzzles.updateOne(
-				{ _id: new ObjectId(model._id) },
+				{ _id: new ObjectId(model.id) },
 				{ $set: { answer: model.answer, clues: model.clues, date: date } }
 			);
 

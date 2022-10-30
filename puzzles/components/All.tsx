@@ -21,7 +21,7 @@ const All: NextPage<AllProps> = (props) => {
 							{puzzles.map((p) => (
 								<Table.Row key={p.answer}>
 									<Table.Cell>
-										<Link href={`/puzzles/${p._id}`}>{p.answer + p._id}</Link>
+										<Link href={`/puzzles/${p.id}`}>{p.answer + p.id}</Link>
 									</Table.Cell>
 								</Table.Row>
 							))}

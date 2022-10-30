@@ -1,11 +1,13 @@
-type Clue = {
+export type Clue = {
+	id: string;
 	word: string;
 	positionInClueWord: number;
 	text: string;
+	createdAt: Date;
 };
 
 export type Puzzle = PuzzleEditModel & {
-	date: Date;
+	createdAt: Date;
 };
 
 export type PuzzleBaseModel = {
@@ -14,5 +16,5 @@ export type PuzzleBaseModel = {
 };
 
 export type PuzzleEditModel = PuzzleBaseModel & {
-	_id: string;
+	id: string;
 };
