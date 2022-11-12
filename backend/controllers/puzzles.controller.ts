@@ -1,9 +1,7 @@
-import { Request, Response } from "express";
 import { NextApiRequest, NextApiResponse } from "next";
-import PuzzlesMongoDAO from "../DAO/PuzzlesMongoDAO";
 import { PuzzleBaseModel, PuzzleEditModel } from "../../models/puzzles";
 import { isError } from "../utils/helpers";
-import PuzzlesPostgresDAO from "../DAO/PuzzlesPostgresDAO";
+import PuzzlesPostgresDAO from "../DAO/PuzzlesDAO";
 
 const tryCatchWrapper = (executable: () => Promise<void>) => async (res: NextApiResponse) => {
 	try {
@@ -71,7 +69,7 @@ export default class PuzzlesController {
 	static async deletePuzzle(req: NextApiRequest, res: NextApiResponse) {
 		const handleDelete = async () => {
 			const puzzleId = req.query.id as string;
-			await PuzzlesMongoDAO.deletePuzzle(puzzleId);
+			await PuzzlesPostgresDAO.deletePuzzle(puzzleId);
 		};
 
 		tryCatchWrapper(handleDelete)(res);

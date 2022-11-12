@@ -50,5 +50,11 @@ export default class PuzzlesMongoDAO {
 		return await prisma.$transaction([...deleteCurrentClues, update]);
 	}
 
-	static async deletePuzzle(puzzleId: any) {}
+	static async deletePuzzle(puzzleId: any) {
+		return await prisma.puzzle.delete({
+			where: {
+				id: puzzleId,
+			},
+		});
+	}
 }
